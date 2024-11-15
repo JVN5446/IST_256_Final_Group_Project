@@ -1,0 +1,43 @@
+#brand-name h2 {
+    color: #d50104;
+}
+
+/* Add shadow on hover for the whole input group, only if not focused */
+.input-group:hover:not(:focus-within) {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Outline the input group with light red on focus */
+.input-group:focus-within {
+    border: 4px solid #e6a1a1; /* Light red outline */
+    border-radius: 0.6rem; /* Keeps rounded corners */
+}
+
+footer {
+    text-align: center;
+}
+
+footer a {
+    padding: 1rem;
+    text-decoration: none;
+    color: #d50104;
+}
+
+footer a:hover {
+    font-weight: 600;
+}
+
+/* Make active link red */
+.nav-link.active {
+    background-color: #d50104 !important; /* Red background for active link */
+    color: white !important; /* Ensure text is white on active */
+}
+
+/* Make inactive links red */
+.nav-link {
+    color: #d50104 !important; /* Red text for inactive links */
+}
+
+.nav-link:hover {
+    font-weight: 600; /* Darker red when hovered */
+}
