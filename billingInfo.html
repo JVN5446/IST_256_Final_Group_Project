@@ -17,7 +17,7 @@
   <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <title>SHIPPING INFO | The One-stop Shop to All Kinds of 4's</title>
+  <title>BILLING INFO | The One-stop Shop to All Kinds of 4's</title>
   <style>
     /* Darken search button on hover */
     .search-button {
@@ -118,16 +118,40 @@
     </ul>
   </div>
   <div class="row" id="content-row" style="min-height: 76vh;">
-    <div class="col-sm-2 border"></div>
+    <div class="col-sm-2"></div>
     <div class="col-sm-8 border p-4">
       <div class="panel-primary">
         <div class="panel-heading">
-          <h3 class="panel-title">Shipping Info: </h3>
+          <h3 class="panel-title">Billing Info: </h3>
         </div>
       </div>
       <form class="row g-3 needs-validation" novalidate>
+        <div class="col-sm-6">
+          <label for="name" class="form-label">Name: </label>
+          <input type="text" class="form-control" id="name" value="" required>
+          <div class="invalid-feedback">
+            Please type a valid address.
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="paymentMethod" class="form-label">Select a payment method: </label>
+          <select class="form-select" id="paymentMethod" required>
+            <option selected disabled value="">...</option>
+            <option>Visa</option>
+            <option>Mastercard</option>
+            <option>Paypal</option>
+            <option>Venmo</option>
+            <option>CashApp</option>
+            <option>Bitcoin</option>
+            <option>Venmo</option>
+            <option>Etherium</option>
+          </select>
+          <div class="invalid-feedback">
+            Please select a valid payment method.
+          </div>
+        </div>
         <div class="col-sm-12">
-          <label for="address" class="form-label">Address: </label>
+          <label for="address" class="form-label">Billing Address: </label>
           <input type="text" class="form-control" id="address" value="" required>
           <div class="invalid-feedback">
             Please type a valid address.
@@ -206,41 +230,14 @@
             Please provide a valid zipcode.
           </div>
         </div>
-        <div class="col-md-6">
-          <label for="shipping_carrier" class="form-label">Select a shipping carrier: </label>
-          <select class="form-select" id="shipping_carrier" required>
-            <option selected disabled value="">...</option>
-            <option value="FedEx">FedEx</option>
-            <option value="UPS">UPS</option>
-            <option value="USPS">USPS</option>
-            <option value="DHL">DHL</option>
-          </select>
-          <div class="invalid-feedback">
-            Please select a valid shipping carrier.
-          </div>
-        </div>
-        <div class="col-md-6">
-          <label for="shipping_method" class="form-label">Select a shipping method: </label>
-          <select class="form-select" id="shipping_method" required>
-            <option selected disabled value="">...</option>
-            <option value="nextDay">Next Day</option>
-            <option value="2ndDay">2nd Day</option>
-            <option value="3-5Days">3-5 Days</option>
-            <option value="4-7Days">4-7 Days</option>
-            <option value="groundShipping">Ground Shipping</option>
-          </select>
-          <div class="invalid-feedback">
-            Please select a valid shipping carrier.
-          </div>
-        </div>
         <div id="cart-total" class="text-right mt-4">
           <button id="checkout-btn" class="btn btn-success">Continue</button>
           <div id="jsonOutput"></div>
         </div>
       </form>
     </div>
+    <div class="col-sm-2"></div>
   </div>
-  <div class="col-sm-2 border"></div>
 </div>
 <div class="row" style="background-color: #eae6e6" id="footer-row">
   <footer class="d-flex justify-content-center align-items-center">
@@ -274,12 +271,12 @@
         let isValid = true;
 
         // Get elements by ID
+        const name = document.getElementById('name')
         const address = document.getElementById('address');
         const city = document.getElementById('city');
         const state = document.getElementById('state');
         const zipcode = document.getElementById('zipcode');
-        const shipping_carrier = document.getElementById('shipping_carrier');
-        const shipping_method = document.getElementById('shipping_method');
+        const paymentMethod = document.getElementById('paymentMethod');
 
         // Custom validation for state, shipping carrier & shipping method
         if (state.value === '...') {
@@ -289,25 +286,11 @@
           state.setCustomValidity('');
         }
 
-        if (shipping_carrier.value === '...') {
-          shipping_carrier.setCustomValidity('Please select a valid shipping carrier.');
+        if (paymentMethod.value === '...') {
+          paymentMethod.setCustomValidity('Please select a valid payment method.');
           isValid = false;
         } else {
-          shipping_carrier.setCustomValidity('');
-        }
-
-        if (shipping_carrier.value === '...') {
-          shipping_carrier.setCustomValidity('Please select a valid shipping carrier.');
-          isValid = false;
-        } else {
-          shipping_carrier.setCustomValidity('');
-        }
-
-        if (shipping_method.value === '...') {
-          shipping_method.setCustomValidity('Please select a valid shipping method.');
-          isValid = false;
-        } else {
-          shipping_method.setCustomValidity('');
+          paymentMethod.setCustomValidity('');
         }
 
         // Check if all form elements are valid
@@ -320,12 +303,12 @@
 
           // Create the JSON object
           const shippingData = {
+            Name: name.value,
             Address: address.value,
             City: city.value,
             State: state.value,
             Zipcode: zipcode.value,
-            Shipping_Carrier: shipping_carrier.value,
-            Shipping_Method: shipping_method.value,
+            Payment_Method: paymentMethod.value,
           };
 
           // Convert JSON object to string
