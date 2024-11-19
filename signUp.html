@@ -125,7 +125,150 @@
         </ul>
     </div>
     <div class="row" id="content-row" style="min-height: 76vh;">
-
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8 border p-4">
+            <div class="panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">User Signup</h3>
+                </div>
+            </div>
+            <form class="row g-3 needs-validation" novalidate>
+                <div class="col-sm-6">
+                    <label for="firstName" class="form-label">First Name: </label>
+                    <input type="text" class="form-control" id="firstName" required>
+                    <div class="invalid-feedback">
+                        Please choose input your first name.
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label for="lastName" class="form-label">Last Name: </label>
+                    <input type="text" class="form-control" id="lastName" required>
+                    <div class="invalid-feedback">
+                        Please choose input your last name.
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <label for="emailAddress" class="form-label">Email Address: </label>
+                    <input type="email" class="form-control" id="emailAddress" value="" required>
+                    <div class="invalid-feedback">
+                        Please choose a valid email address.
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <label for="phoneNumber" class="form-label">Phone Number: </label>
+                    <input type="text" class="form-control" id="phoneNumber" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid phone number.
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <label for="age" class="form-label">Age: </label>
+                    <input type="text" class="form-control" id="age" min="0" step="1" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid age.
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <label for="address" class="form-label">Address: </label>
+                    <input type="text" class="form-control" id="address" value="" required>
+                    <div class="invalid-feedback">
+                        Please type a valid address.
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label for="city" class="form-label">City: </label>
+                    <input type="text" class="form-control" id="city" value="" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid city.
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="state" class="form-label">State: </label>
+                    <select class="form-select" id="state" required>
+                        <option selected disabled value="">...</option>
+                        <option value="AL">AL</option>
+                        <option value="AK">AK</option>
+                        <option value="AZ">AZ</option>
+                        <option value="AR">AR</option>
+                        <option value="CA">CA</option>
+                        <option value="CO">CO</option>
+                        <option value="CT">CT</option>
+                        <option value="DE">DE</option>
+                        <option value="FL">FL</option>
+                        <option value="GA">GA</option>
+                        <option value="HI">HI</option>
+                        <option value="ID">ID</option>
+                        <option value="IL">IL</option>
+                        <option value="IN">IN</option>
+                        <option value="IA">IA</option>
+                        <option value="KS">KS</option>
+                        <option value="KY">KY</option>
+                        <option value="LA">LA</option>
+                        <option value="ME">ME</option>
+                        <option value="MD">MD</option>
+                        <option value="MA">MA</option>
+                        <option value="MI">MI</option>
+                        <option value="MN">MN</option>
+                        <option value="MS">MS</option>
+                        <option value="MO">MO</option>
+                        <option value="MT">MT</option>
+                        <option value="NE">NE</option>
+                        <option value="NV">NV</option>
+                        <option value="NH">NH</option>
+                        <option value="NJ">NJ</option>
+                        <option value="NM">NM</option>
+                        <option value="NY">NY</option>
+                        <option value="NC">NC</option>
+                        <option value="ND">ND</option>
+                        <option value="OH">OH</option>
+                        <option value="OK">OK</option>
+                        <option value="OR">OR</option>
+                        <option value="PA">PA</option>
+                        <option value="RI">RI</option>
+                        <option value="SC">SC</option>
+                        <option value="SD">SD</option>
+                        <option value="TN">TN</option>
+                        <option value="TX">TX</option>
+                        <option value="UT">UT</option>
+                        <option value="VT">VT</option>
+                        <option value="VA">VA</option>
+                        <option value="WA">WA</option>
+                        <option value="WV">WV</option>
+                        <option value="WI">WI</option>
+                        <option value="WY">WY</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a valid state.
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <label for="zipcode" class="form-label">Zipcode: </label>
+                    <input type="text" class="form-control" id="zipcode" min="0" step="1" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid zipcode.
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid password.
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" required>
+                    <div class="invalid-feedback">
+                        Please make sure that your passwords are the same.
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary" type="submit">Sign Up!</button>
+                    <span id="json"></span>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-2"></div>
     </div>
     <div class="row" style="background-color: #eae6e6" id="footer-row">
         <footer class="d-flex justify-content-center align-items-center">
@@ -146,5 +289,85 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous">
 </script>
+<script>
+    (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                const firstName = form.querySelector('#firstName');
+                const lastName = form.querySelector('#lastName');
+                const emailAddress = form.querySelector('#emailAddress');
+                const phoneNumber = form.querySelector('#phoneNumber');
+                const age = form.querySelector('#age');
+                const address = form.querySelector('#address');
+                const city = form.querySelector('#city');
+                const state = form.querySelector('#state');
+                const zipcode = form.querySelector('#zipcode');
+                const password = form.querySelector('#password')
+                const confirmPassword = form.querySelector('#confirmPassword')
+                const jsonOutput = document.querySelector('#json');
+                let isValid = true;
+
+                // Email validation: Check if email contains '@' and '.'
+                if (!emailAddress.value.includes('@') || !emailAddress.value.includes('.')) {
+                    emailAddress.setCustomValidity('Please enter a valid email address.');
+                    isValid = false;
+                } else {
+                    emailAddress.setCustomValidity(''); // Clear previous validation message
+                }
+
+                // State Validation
+                if (state.value === '...') {
+                    state.setCustomValidity('Please select a valid state.');
+                    isValid = false;
+                } else {
+                    state.setCustomValidity('');
+                }
+
+                // Password matching validation
+                if (password.value !== confirmPassword.value) {
+                    confirmPassword.setCustomValidity('Passwords do not match.');
+                    isValid = false;
+                } else {
+                    confirmPassword.setCustomValidity(''); // Clear previous validation message
+                }
+
+                if (!form.checkValidity() || !isValid) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else {
+                    // Prevent actual form submission
+                    event.preventDefault();
+
+                    // Create the JSON string
+                    const userData = {
+                        ShopperFirstName: firstName.value,
+                        ShopperLastName: lastName.value,
+                        ShopperEmailAddress: emailAddress.value,
+                        ShopperContactPhoneNumber: phoneNumber.value,
+                        ShopperAge: age.value,
+                        ShopperAddress: address.value,
+                        ShopperCity: city.value,
+                        ShopperState: state.value,
+                        ShopperZipcode: zipcode.value,
+                        ShopperPassword: password.value,
+                        ShopperConfirmPassword: confirmPassword.value
+                    };
+
+                    // Display the JSON in the span
+                    jsonOutput.textContent = JSON.stringify(userData, null, 2);
+                }
+
+                form.classList.add('was-validated');
+            }, false)
+        })
+    })()
+</script>
+
 </body>
 </html>

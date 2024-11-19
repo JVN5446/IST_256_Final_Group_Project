@@ -35,6 +35,17 @@
             box-shadow: none;
         }
 
+        h1 {text-align: center;}
+        #cart-items {border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;}
+        .cart-item {display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;}
+        .cart-item img {width: 50px; height: 50px; object-fit: fill; margin-right: 10px;}
+        .cart-header, .cart-item {display: flex; align-items: center; justify-content: space-between;}
+        .cart-header div, .cart-item div {flex: 1; text-align: center;}
+        .cart-header {font-weight: bold; margin-bottom: 10px;}
+        #cart-total {text-align: right;}
+        #checkout-btn {background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer;}
+        #checkout-btn:hover {background-color: #45a049;}
+        #json-output-container {border: 1px solid #ccc; padding: 10px; margin-top: 20px; white-space: pre-wrap;}
     </style>
 </head>
 <body>
@@ -126,7 +137,29 @@
     </div>
     <div class="row" id="content-row" style="min-height: 76vh;">
         <div class="col-sm-2 border"></div>
-        <div class="col-sm-8 border"></div>
+        <div class="col-sm-8 border">
+            <h3 class="text-center mt-4">4 Store Shopping Cart</h3>
+            <div id="cart-items" class="mt-4">
+                <!-- Header Row for Cart Items -->
+                <div class="cart-header">
+                    <div>Image</div>
+                    <div>Product ID</div>
+                    <div>Item Price</div>
+                    <div>Quantity</div>
+                    <div>Total Item Price</div>
+                    <div>Actions</div>
+                </div>
+            </div>
+            <div id="cart-total" class="text-right mt-4">
+                <h4>Total: $<span id="total-amount">0</span></h4>
+                <button id="checkout-btn" class="btn btn-success">Checkout</button>
+            </div>
+            <div id="json-output-container"></div>
+        </div>
+        <div class="col-sm-2 border">
+            <aside><p>This spot is reserved for ads</p></aside>
+        </div>
+        </div>
         <div class="col-sm-2 border"></div>
     </div>
     <div class="row" style="background-color: #eae6e6" id="footer-row">
@@ -148,5 +181,85 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous">
 </script>
+<script>
+    const products = [
+        { productId: "001", productName: "A Pink #4", productPrice: 400.99, image: "https://static.vecteezy.com/system/resources/previews/024/683/991/non_2x/pink-3d-number-4-free-png.png" },
+        { productId: "002", productName: "A Red #4", productPrice: 20.99, image: "https://atlas-content-cdn.pixelsquid.com/stock-images/number-4-Vay92K1-600.jpg" }
+    ];
+
+    function addToCart(product) {
+        const cartItems = document.getElementById("cart-items");
+        const cartItem = document.createElement("div");
+        cartItem.classList.add("cart-item");
+
+        const productImgDiv = document.createElement("div");
+        const productImg = document.createElement("img");
+        productImg.src = product.image;
+        productImg.alt = product.productName;
+        productImgDiv.appendChild(productImg);
+
+        const productIdDiv = document.createElement("div");
+        productIdDiv.textContent = product.productId;
+
+        const productPriceDiv = document.createElement("div");
+        productPriceDiv.textContent = "$" + product.productPrice.toFixed(2);
+
+        const quantityDiv = document.createElement("div");
+        const quantity = document.createElement("input");
+        quantity.type = "number";
+        quantity.value = 1;
+        quantity.addEventListener("input", () => {
+            calculateTotal();
+            updateTotal();
+        });
+        quantityDiv.appendChild(quantity);
+
+        const productTotalDiv = document.createElement("div");
+        const calculateTotal = () => {
+            const qty = parseInt(quantity.value) || 1;
+            productTotalDiv.textContent = "$" + (qty * product.productPrice).toFixed(2);
+        };
+        calculateTotal();
+
+        const actionsDiv = document.createElement("div");
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "Remove";
+        removeBtn.classList.add("btn", "btn-danger");
+        removeBtn.onclick = () => {
+            cartItem.remove();
+            updateTotal();
+        };
+        actionsDiv.appendChild(removeBtn);
+
+        cartItem.append(productImgDiv, productIdDiv, productPriceDiv, quantityDiv, productTotalDiv, actionsDiv);
+        cartItems.appendChild(cartItem);
+    }
+
+    function updateTotal() {
+        const totals = Array.from(document.querySelectorAll('.cart-item div:nth-last-child(2)')).map(el => parseFloat(el.textContent.slice(1)));
+        document.getElementById("total-amount").textContent = totals.reduce((acc, val) => acc + val, 0).toFixed(2);
+    }
+
+    function generateCartJSON() {
+        const items = Array.from(document.getElementsByClassName("cart-item")).map(cartItem => {
+            const id = cartItem.querySelector("div:nth-child(2)").textContent;
+            const price = cartItem.querySelector("div:nth-child(3)").textContent.slice(1);
+            const qty = cartItem.querySelector("input").value;
+            const total = cartItem.querySelector("div:nth-last-child(2)").textContent.slice(1);
+            return `{ "productId": "${id}", "price": "${price}", "quantity": ${qty}, "total": "${total}" }`;
+        });
+        const jsonString = `[ ${items.join(', ')} ]`;
+        document.getElementById("json-output-container").textContent = jsonString;
+    }
+
+    document.getElementById("checkout-btn").addEventListener("click", function(event){
+        generateCartJSON()
+        window.location.href = "shippingInfo.html"
+    });
+    products.forEach(addToCart);
+    updateTotal();
+
+</script>
+
 </body>
 </html>

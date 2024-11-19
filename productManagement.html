@@ -125,6 +125,111 @@
         </ul>
     </div>
     <div class="row" id="content-row" style="min-height: 76vh;">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8 border p-4 ">
+            <div class="panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Product Management: </h3>
+                </div>
+            </div>
+            <form class="row g-3 needs-validation" novalidate>
+                <div class="col-sm-6">
+                    <label for="productId" class="form-label">ID: </label>
+                    <input type="number" class="form-control" id="productId" min="0" step="1" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
+                    <div class="invalid-feedback">
+                        Please type a valid Product ID.
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label for="productName" class="form-label">Name: </label>
+                    <input type="text" class="form-control" id="productName" value="" required>
+                    <div class="invalid-feedback">
+                        Please provide a name.
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <label for="description" class="form-label">Description: </label>
+                    <textarea class="form-control" id="description" rows="3" required></textarea>
+                    <div class="invalid-feedback">
+                        Please provide a description.
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="productCategory" class="form-label">Product Category:</label>
+                    <select class="form-select" id="productCategory" required>
+                        <option selected disabled value="">...</option>
+                        <option>Men</option>
+                        <option>Women</option>
+                        <option>Children</option>
+                        <option>Infant</option>
+                        <option>Gamer</option>
+                        <option>Lumberjack</option>
+                        <option>Special Forces</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a valid category.
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="productColor" class="form-label">Color: </label>
+                    <select class="form-select" id="productColor" required>
+                        <option selected disabled value="">...</option>
+                        <option>Red</option>
+                        <option>Orange</option>
+                        <option>Yellow</option>
+                        <option>Green</option>
+                        <option>Blue</option>
+                        <option>Purple</option>
+                        <option>Black</option>
+                        <option>White</option>
+                        <option>Grey</option>
+                        <option>Brown</option>
+                        <option>Goat Hoove Shavings</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a valid color.
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="material" class="form-label">Material: </label>
+                    <select class="form-select" id="material" required>
+                        <option selected disabled value="">...</option>
+                        <option>Wood</option>
+                        <option>Metal</option>
+                        <option>Plastic</option>
+                        <option>Fabric</option>
+                        <option>Stone</option>
+                        <option>Crystal</option>
+                        <option>Singularity</option>
+                        <option>Sea Shells</option>
+                        <option>2024 Genesis G90</option>
+
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a valid material.
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label for="productPrice" class="form-label">Product Price($): </label>
+                    <input type="number" class="form-control" id="productPrice" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid price.
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label for="productWeight" class="form-label">Product Weight(lbs): </label>
+                    <input type="number" class="form-control" id="productWeight" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid weight.
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <span id="jsonOutput"></span>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-2"></div>
 
     </div>
     <div class="row" style="background-color: #eae6e6" id="footer-row">
@@ -146,5 +251,89 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous">
 </script>
+<script>
+    (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                let isValid = true;
+
+                // Get elements by ID
+                const productId = document.getElementById('productId');
+                const productName = document.getElementById('productName');
+                const description = document.getElementById('description');
+                const productCategory = document.getElementById('productCategory');
+                const productColor = document.getElementById('productColor');
+                const productMaterial = document.getElementById('material')
+                const productPrice = document.getElementById('productPrice');
+                const productWeight = document.getElementById('productWeight');
+
+                // Custom validation for productCategory and productUnitOfMeasure
+                if (productCategory.value === '...') {
+                    productCategory.setCustomValidity('Please select a valid category.');
+                    isValid = false;
+                } else {
+                    productCategory.setCustomValidity('');
+                }
+
+                if (productColor.value === '...') {
+                    productColor.setCustomValidity('Please select a valid color.');
+                    isValid = false;
+                } else {
+                    productColor.setCustomValidity('');
+                }
+
+                // Custom validation for productPrice (non-negative)
+                if (productPrice.value < 0) {
+                    productPrice.setCustomValidity('Price cannot be negative.');
+                    isValid = false;
+                } else {
+                    productPrice.setCustomValidity('');
+                }
+
+                // Custom validation for productWeight (non-negative)
+                if (productWeight.value < 0) {
+                    productWeight.setCustomValidity('Weight cannot be negative.');
+                    isValid = false;
+                } else {
+                    productWeight.setCustomValidity('');
+                }
+
+                // Check if all form elements are valid
+                if (!form.checkValidity() || !isValid) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else {
+                    // Prevent actual form submission
+                    event.preventDefault();
+
+                    // Create the JSON object
+                    const productData = {
+                        ProductID: productId.value,
+                        ProductName: productName.value,
+                        ProductDescription: description.value,
+                        ProductCategory: productCategory.value,
+                        ProductColor: productColor.value,
+                        ProductMaterial: productMaterial.value,
+                        ProductPrice: productPrice.value,
+                        ProductWeight: productWeight.value
+                    };
+
+                    // Convert JSON object to string
+                    const jsonString = JSON.stringify(productData, null, 2);
+                    document.getElementById('jsonOutput').textContent = jsonString; // Display JSON on the page
+                }
+
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>
+
 </body>
 </html>
