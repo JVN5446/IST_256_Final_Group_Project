@@ -64,15 +64,12 @@
         <div class="d-flex col-sm-5  justify-content-center align-items-center" id="search-bar">
             <div class="input-group">
                 <!-- Dropdown Button -->
-                <button class="btn btn-secondary dropdown-toggle" id="categories-dropdown" data-bs-toggle="dropdown" aria-expanded="false"
-                        style="transition: background-color 0.3s ease; background-color: #d50104;"
+                <button class="btn btn-secondary dropdown-toggle" id="product-dropdown" data-bs-toggle="dropdown" aria-expanded="false" style="transition: background-color 0.3s ease; background-color: #d50104;"
                         onmouseover="this.style.backgroundColor='#a30003'" onmouseout="this.style.backgroundColor='#d50104'">
-                    All
+                    Select Product
                 </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Option 1</a></li>
-                    <li><a class="dropdown-item" href="#">Option 2</a></li>
-                    <li><a class="dropdown-item" href="#">Option 3</a></li>
+                <ul class="dropdown-menu" id="product-list">
+                    <!-- Products will be dynamically added here -->
                 </ul>
 
                 <!-- Search Input -->
@@ -203,7 +200,7 @@
 
         const productImgDiv = document.createElement("div");
         const productImg = document.createElement("img");
-        productImg.src = product.image;
+        productImg.src = product.image || "https://via.placeholder.com/50";  // Default to a placeholder image
         productImg.alt = product.productName;
         productImgDiv.appendChild(productImg);
 
@@ -259,7 +256,70 @@
         });
         const jsonString = `[ ${items.join(', ')} ]`;
         document.getElementById("json-output-container").textContent = jsonString;
+
+        // Send data to the server via AJAX
+        fetch('https://ist256.up.ist.psu.edu:3004/shoppingCart', { // Updated URL
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(items),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                alert('Order saved successfully!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was a problem saving the order.');
+            });
     }
+
+    async function renderProducts() {
+        const productList = document.getElementById("product-list");
+        productList.innerHTML = ""; // Clear previous list
+
+        try {
+            // Perform AJAX GET request to fetch all products from the server
+            const response = await fetch("https://ist256.up.ist.psu.edu:3004/product/:productID", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",  // Set the content type
+                },
+            });
+
+            if (response.ok) {
+                const products = await response.json();  // Parse the JSON response
+
+                // Iterate over the products and create list items for each
+                products.forEach(product => {
+                    // Create list item for the product
+                    const li = document.createElement("li");
+                    const a = document.createElement("a");
+                    a.classList.add("dropdown-item");
+                    a.href = "#";
+                    a.textContent = `${product.productId} - ${product.productName}`;
+
+                    // Add event listener to handle product selection
+                    a.onclick = () => addToCart(product);
+
+                    li.appendChild(a);
+                    productList.appendChild(li);
+                });
+            } else {
+                console.error("Failed to fetch products.");
+            }
+        } catch (error) {
+            console.error("Error fetching products:", error);
+        }
+    }
+    renderProducts()
 
     document.getElementById("checkout-btn").addEventListener("click", function(event){
         generateCartJSON()
